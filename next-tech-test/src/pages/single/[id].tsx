@@ -8,17 +8,18 @@ type SingleBeerProps = {
 };
 
 const SingleBeer: React.FC<SingleBeerProps> = ({ beer }) => {
-  console.log(beer);
   return (
     <div className="bg-slate-700 min-h-screen">
       <div className="container mx-auto py-12">
         <div className="bg-slate-700 rounded-md p-6 shadow-md">
           <div className="flex flex-col items-center md:flex-row md:items-start">
-            <img
-              src={beer.image_url}
-              alt={`Image of ${beer.name}`}
-              className="object-cover max-w-[381px] max-h-[760px]"
-            />
+            <div className="w-full md:w-1/4 mb-6 md:mr-8 md:mb-0 overflow-hidden rounded">
+              <img
+                src={beer.image_url}
+                alt={`Image of ${beer.name}`}
+                className="object-scale-down w-full"
+              />
+            </div>
             <div>
               <h1 className="text-blue-400 text-lg font-bold mb-2">
                 {beer.name}
@@ -39,7 +40,7 @@ const SingleBeer: React.FC<SingleBeerProps> = ({ beer }) => {
                   <li key={index}>{food}</li>
                 ))}
               </ul>
-              <p className="text-blue-200 text-xs mt-4">Brewer&apos;s Tips:</p>
+              <p className="text-blue-200 text-xs mt-4">Brewer's Tips:</p>
               <p className="text-blue-200 text-xs">{beer.brewers_tips}</p>
             </div>
           </div>
@@ -54,7 +55,6 @@ export const getServerSideProps: GetServerSideProps<SingleBeerProps> = async (
 ) => {
   const { id } = context.params as { id: string };
   const response: ApiResponse<Beer[]> = await BeerApiService.getBeerById(id);
-  console.log(response);
   if (!response.data) {
     return {
       notFound: true,
