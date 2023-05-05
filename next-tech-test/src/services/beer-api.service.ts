@@ -28,6 +28,19 @@ export class BeerApiService {
   }
 
   /**
+   * Search for beers by name
+   *
+   * @param searchString The search string to look for in beer names
+   * @returns {Promise<ApiResponse<Beer[]>>} List of beers matching the search string
+   */
+  public static async searchBeers(
+    searchString: string
+  ): Promise<ApiResponse<Beer[]>> {
+    const formattedSearchString = searchString.replace(/ /g, "_");
+    return this.getBeers({ beer_name: formattedSearchString });
+  }
+
+  /**
    * Calls the API with the given endpoint and returns the response
    * 
    * Example of how to call this method:
