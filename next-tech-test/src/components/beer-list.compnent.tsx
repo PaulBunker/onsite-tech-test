@@ -6,15 +6,16 @@ import { SingleBeer } from "./single-beer.component";
 export const BeerList = () => {
   const [beerResponse, setBeerResponse] = useState<ApiResponse<Beer[]>>();
   const [isLoadingBeers, setLoadingBeers] = useState(false);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     setLoadingBeers(true);
 
-    BeerApiService.getBeers().then((response) => {
+    BeerApiService.getBeers({ page }).then((response) => {
       setBeerResponse(response);
       setLoadingBeers(false);
     });
-  }, []);
+  }, [page]);
 
   return (
     <div>
@@ -26,6 +27,22 @@ export const BeerList = () => {
           ))}
         </div>
       )}
+      {/* pagination */}
+      <div className="flex justify-center">
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
+          onClick={() => setPage(page - 1)}
+          disabled={page === 1}
+        >
+          Previous
+        </button>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={() => setPage(page + 1)}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

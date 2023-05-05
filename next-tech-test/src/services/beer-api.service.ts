@@ -21,10 +21,10 @@ export class BeerApiService {
    * Get a single beer by its ID
    *
    * @param id ID of the beer to get
-   * @returns {Promise<ApiResponse<Beer>>} Beer with the given ID
+   * @returns {Promise<ApiResponse<Beer[]>>} Beer with the given ID
    */
-  public static async getBeerById(id: string): Promise<ApiResponse<Beer>> {
-    return this.callApi<Beer>(`beers/${id}`);
+  public static async getBeerById(id: string): Promise<ApiResponse<Beer[]>> {
+    return this.callApi<Beer[]>(`beers/${id}`);
   }
 
   /**
